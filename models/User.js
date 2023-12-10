@@ -1,0 +1,36 @@
+import mongoose from "mongoose";
+
+const userSchema = new mongoose.Schema({
+    username:{
+        type:String,
+        required:true,
+        min:[3,'Must be atleast 3, got {VALUE}']
+    },
+    email:{
+        type:String,
+        required:true,
+        unique:true,
+        validator(value){
+            if(!validator.isEmail(value)){
+                throw new Error("Invalid Email")
+            }
+        }
+    },
+    password:{
+        type:String,
+        required:true
+    },
+    photo:{
+        type:String
+    },
+    role: {
+        type: String,
+        default: "user",
+      },
+    },
+    { timestamps: true }
+)
+
+export default mongoose.model("users",userSchema)
+
+
