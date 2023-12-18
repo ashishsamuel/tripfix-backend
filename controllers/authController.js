@@ -55,12 +55,19 @@ export const login = async(req,res)=>{
         // create jwt token 
         const token = jwt.sign({id:user._id,role:user.role},process.env.JWT_SECRET_KEY,{expiresIn:"25d"});
 
+        if(checkCorrectPassword){
+            res.cookie('accessToken',token,{
+                        httpOnly: true,
+                        expires:token.expiresIn
+                    }).status(200).json({success:true,token ,message:'successfully login',data:{...rest}
+                });
+        }
         // set token in the browser cookiees and send the response to the client 
-        res.cookie('accessToken',token,{
-            httpOnly: true,
-            expires:token.expiresIn
-        }).status(200).json({success:true,token ,message:'successfully login',data:{...rest}
-    });
+    //     res.cookie('accessToken',token,{
+    //         httpOnly: true,
+    //         expires:token.expiresIn
+    //     }).status(200).json({success:true,token ,message:'successfully login',data:{...rest}
+    // });
 
     } catch (err) {
         res.status(500).json({success:false,message:'Failed to login'})
