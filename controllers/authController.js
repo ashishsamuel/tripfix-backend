@@ -31,12 +31,12 @@ export const register = async(req,res)=>{
 
 // user login
 export const login = async(req,res)=>{
-
+    console.log("request", req);
     const email = req.body.email
 
     try {
         const user = await User.findOne({email})
-
+        console.log("User Details", user);
         // if user doesn't exist
         if(!user){
             return res.status(404).json({success:false,message:'User not found'})
@@ -59,7 +59,8 @@ export const login = async(req,res)=>{
         res.cookie('accessToken',token,{
             httpOnly: true,
             expires:token.expiresIn
-        }).status(200).json({token ,data:{...rest},role})
+        }).status(200).json({success:true,token ,message:'successfully login',data:{...rest}
+    });
 
     } catch (err) {
         res.status(500).json({success:false,message:'Failed to login'})
