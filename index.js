@@ -14,7 +14,7 @@ dotenv.config()
 const app = express()
 const port = process.env.PORT || 8000
 const corsOptions = {
-    origin:'https://tripfix-server.onrender.com',
+    origin:'https://trip-fix-travelwebsite-frontend.vercel.app',
     credentials:true
 }
 
